@@ -1,0 +1,3 @@
+void RGB(int n) {
+
+}
