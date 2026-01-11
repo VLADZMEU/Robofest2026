@@ -68,6 +68,6 @@ void PID_Enc(float sp, float kp, float ki, float kd, int enc, int raz, int stop)
     Go(0, 0);
   }
   else if (stop == 2) { //доехать колесами до перекрестка
-    MoveSync(50 * sp / abs(sp), 50 * sp / abs(sp), 300, 0, 1);
+    MoveSync(70 * sp / abs(sp), 70 * sp / abs(sp), 300, 0, 1);
   }
 }

@@ -1,13 +1,22 @@
 void Zahvat(int z,int pol) {
   if (z=='p'){
       if (pol == 0){
-        myservo_p.write(175);
+        myservo_p.write(168);
       }
       if (pol == 1){
         myservo_p.write(100);
       }
       if (pol == 2){
         myservo_p.write(0);
+      }
+      if (pol == 3){
+        int d =100;
+        while (d<170){
+          myservo_p.write(d);
+          d=d+4;
+          delay(40);
+        }
+        
       }
      
   }
@@ -23,7 +32,7 @@ void Zahvat(int z,int pol) {
         while (d<160){
           myservo_v.write(d);
           d=d+2;
-          delay(40);
+          delay(20);
         }
         
       }
@@ -33,7 +42,7 @@ void Zahvat(int z,int pol) {
         myservo_z.write(90);
       }
       if (pol == 0){
-        myservo_z.write(180);
+        myservo_z.write(177);
       }
       
   }

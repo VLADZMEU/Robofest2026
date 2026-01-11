@@ -1,9 +1,17 @@
-//Пины датчиков линии
 #define d_f_r A2
 #define d_f_l A0
+#include <Servo.h>
+
+#include <OLED_I2C.h>
+//Пины датчиков линии
+
 //#define d_b_r A2
 //#define d_b_l A3
-#include <Servo.h>
+
+
+OLED myOLED(SDA, SCL); 
+extern uint8_t SmallFont[];
+uint32_t tmr;
 Servo myservo_p;
 Servo myservo_v;
 Servo myservo_z;
@@ -40,6 +48,9 @@ Servo myservo_z;
 int color = 0 ;
 int dist = 0;
 
+int col1 = 0;
+int col2 = 0;
+
 //Калибровка датчиков
 float d_f_r_min = 34; //передний правый 0
 float d_f_r_max = 480;
@@ -50,6 +61,9 @@ float d_f_l_max = 483;
 //float d_b_l_min = 0; //задний левый 3
 //float d_b_l_max = 0;
 
+extern uint8_t SmallFont[];
+extern uint8_t MediumNumbers[];
+extern uint8_t BigNumbers[];
 
 //калибровка дотчика цвета
 float Red_W = 0;
@@ -65,6 +79,11 @@ void enc2() {
   encR++;
 }
 void setup() {
+  if(!myOLED.begin(SSD1306_128X64)){
+    while(1);  
+  }
+    
+  myOLED.setFont(SmallFont);
   pinMode(pwm_l, OUTPUT);
   pinMode(in1_l, OUTPUT);
   pinMode(in2_l, OUTPUT);
@@ -86,31 +105,21 @@ void setup() {
   myservo_z.attach(zahv_z);
 
   Serial.begin(9600);
+  myOLED.clrScr();
+  tmr = millis();
+  
 }
 void loop() {   //4.2 cm == 100gr
+  
   Display();
   Zahvat('all', 0);
-  while (digitalRead(button1) == 1);
-  delay(1000);
-
-
-
-
-
-  //  Go(100, 100);
-  //  while (digitalRead(button1) == 1);
-  //  MoveSync(100, 100, 1000, 0, 1);
-  //  while (digitalRead(button1) == 1);
-  //  PID_Enc(200, 0.5, 0.03, 5, 2000, 1, 1);
-  //  while (digitalRead(button1) == 1);
-  //  PID_X(200, 0.5, 0.03, 5, 1, 2);
-  // Go2Color(50,0,1,0,0,1);
-//  Start(3,3);
-//  Antena();
-  Kubic1(1,2);
-
-
-
-
+  ViborColor();
+  
+  Start(col1,3);
+  Antena();
+  Kubic1(col2,3);
+  Kubic2();
+  myOLED.print(String(float(millis() - tmr)/1000), 55,40);
+  
 
 }

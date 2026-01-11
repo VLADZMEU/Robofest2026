@@ -8,7 +8,7 @@ void Turn(int n,int sp,int s) {
     MoveSync(-sp,sp,270,0,s);
   }
   else if (abs(n) == 3){ //разворот
-    MoveSync(-sp,sp,580,0,s);
+    MoveSync(-sp,sp,545,0,s);
   }
 
 }
